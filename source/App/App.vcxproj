@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(ProjectDir)..\Library\$(Configuration)\;%(AdditionalLibraryDirectories);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)..\source\Library;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Library\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\admin\Documents\SDL2-2.0.7\include;$(IncludePath)</IncludePath>
