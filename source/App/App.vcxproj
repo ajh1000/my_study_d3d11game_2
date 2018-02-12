@@ -74,15 +74,16 @@
     <IncludePath>$(ProjectDir)..\Library\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Users\admin\Documents\SDL2-2.0.7\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Library\;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\Library\$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>$(ProjectDir)..\Library\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)..\Library\$(Platform)\$(Configuration)\;$(ProjectDir)..\Library\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(ProjectDir)..\Library\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(ProjectDir)..\Library\$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Library\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -97,7 +98,7 @@
     <Link>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>Libraryd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Library.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -108,7 +109,7 @@
       <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Libraryd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Library.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
