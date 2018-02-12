@@ -39,7 +39,7 @@ void Game::render()
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 
-	if (FAILED(GameDevice::instance().m_swapChain->Present(1, 0))) {
+	if (FAILED(GameDevice::instance().m_swapChain->Present(0, 0))) {
 		//temporary exception..
 		//will do some method here
 		throw std::exception("Game::render() failed");
