@@ -1,15 +1,17 @@
 #pragma once
 
+#include "pch.h"
+#include "GameSingleton.h"
+
 using namespace Microsoft::WRL;
 
-class GameDevice
+class GameDevice : public GameSingleton<GameDevice>
 {
 public:
 	struct VideoCardInfo {
 		VideoCardInfo() :
 			videoCardName(""),memory(0)
 		{
-
 		}
 		std::string videoCardName;
 		UINT memory;
@@ -30,7 +32,6 @@ public:
 	GameDevice();
 	~GameDevice();
 
-	SINGLETON(GameDevice);
 	
 	void init();
 
@@ -59,4 +60,3 @@ public:
 private:
 	HWND m_hWnd;
 };
-

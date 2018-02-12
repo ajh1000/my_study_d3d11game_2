@@ -1,10 +1,5 @@
 #pragma once
 
-//DEFINES
-#define SINGLETON(CLASS) inline static CLASS& instance() {\
-							static CLASS instance;\
-							return instance;\
-						 }
 
 
 // Use the C++ standard templated min/max

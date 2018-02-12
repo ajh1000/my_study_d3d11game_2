@@ -13,6 +13,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameDevice.h" />
     <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="GameSingleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />

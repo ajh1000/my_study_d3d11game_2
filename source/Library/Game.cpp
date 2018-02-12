@@ -52,6 +52,7 @@ void Game::run(UINT width, UINT height)
 	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	//init System
+	
 	GameWindow::instance().init(width, height);
 	GameDevice::instance().init();
 	GameTimer::instance().init();

@@ -9,8 +9,6 @@
 
 #include "pch.h"
 
-class GameWindow;
-
 class Game
 {
 public:

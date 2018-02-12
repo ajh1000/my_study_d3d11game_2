@@ -1,13 +1,11 @@
 #pragma once
+#include "GameSingleton.h"
 
-
-class GameWindow
+class GameWindow : public GameSingleton<GameWindow>
 {
 public:
 	GameWindow();
 	~GameWindow();
-
-	SINGLETON(GameWindow);
 
 	void init(UINT width, UINT height);
 
@@ -18,10 +16,13 @@ public:
 	HWND m_hWnd;
 	HINSTANCE m_hInst;
 
+	
 #define BINDTYPE std::function<bool(UINT message, WPARAM wParam, LPARAM lParam)>
-	void bindMsgWithCallbackFunc(DWORD msg, BINDTYPE func);
+	//하나의 메세지에 여러 개 함수를 등록할 수 있다. 
+	void AddFuncToMsg(DWORD msg, BINDTYPE func);
 
 private:
+	
 	std::map<DWORD, std::vector<BINDTYPE>> m_mapBind;
 
 };

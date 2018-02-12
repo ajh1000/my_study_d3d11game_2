@@ -31,7 +31,7 @@ void GameWindow::init(UINT width, UINT height)
 	int ScreenX = GetSystemMetrics(SM_CXSCREEN);
 	int ScreenY = GetSystemMetrics(SM_CYSCREEN);
 
-	RECT wr = { 0,0,static_cast<LONG>(width) , static_cast<LONG>(height )};
+	RECT wr = { 0,0,static_cast<LONG>(width) , static_cast<LONG>(height) };
 	AdjustWindowRect(&wr, windowStyle, FALSE);
 	wr.right -= wr.left;
 	wr.bottom -= wr.top;
@@ -47,7 +47,7 @@ void GameWindow::init(UINT width, UINT height)
 		centerX, centerY, wr.right, wr.bottom, 0, 0, 0, this);
 }
 
-void GameWindow::bindMsgWithCallbackFunc(DWORD msg, BINDTYPE func)
+void GameWindow::AddFuncToMsg(DWORD msg, BINDTYPE func)
 {
 	m_mapBind[msg].push_back(func);
 }
@@ -57,10 +57,15 @@ LRESULT GameWindow::CustomMsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	PAINTSTRUCT ps;
 	HDC hdc;
 
-	for (auto o : m_mapBind[message]) {
-		o(message,wParam,lParam);
-	}
+	
 
+		for (auto o : m_mapBind) {
+			for (auto func : o.second) {
+				func(message, wParam, lParam);
+			}
+		}
+	
+	
 
 	switch (message)
 	{

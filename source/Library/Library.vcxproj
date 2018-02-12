@@ -139,6 +139,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameDevice.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameSingleton.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="pch.h" />

@@ -1,7 +1,7 @@
 #pragma once
 
-class GameTimer;
-class GameModelImporter;
+#include "GameDevice.h"
+#include "GameTimer.h"
 
 class GameObject
 {
@@ -9,12 +9,9 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	void init(ID3D11Device* device, ID3D11DeviceContext* context);
+	virtual void init()=0;
 
 protected:
-	ID3D11Device* m_device;
-	ID3D11DeviceContext* m_context;
-
 };
 
 

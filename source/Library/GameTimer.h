@@ -1,13 +1,13 @@
 #pragma once
 #include "pch.h"
 
-class GameTimer
+#include "GameSingleton.h"
+class GameTimer  : public GameSingleton<GameTimer>
 {
 public:
 	GameTimer();
 	~GameTimer();
 
-	SINGLETON(GameTimer);
 
 	void init();
 
