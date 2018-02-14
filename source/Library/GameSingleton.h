@@ -13,12 +13,3 @@ public:
 	}
 
 };
-
-class test : public GameSingleton<test>{
-public:
-	test() {
-		
-	}
-
-	
-};

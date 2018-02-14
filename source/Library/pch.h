@@ -10,8 +10,16 @@
 #define NOGDI
 #define NOBITMAP
 
+
+//추가 라이브러리 사용 알려주기
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"dxgi.lib")
+
+#ifdef _DEBUG
+#pragma comment(lib,"..\\..\\external\\effects11\\lib\\for_debug\\Effects11d.lib")
+#else
+#pragma comment(lib,"..\\..\\external\\effects11\\lib\\for_release\\Effects11.lib")
+#endif
 
 //STANDARD 
 #include <windows.h>
