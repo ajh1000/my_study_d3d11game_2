@@ -14,9 +14,9 @@ public:
 
 };
 
-class A : public GameSingleton<A>{
+class test : public GameSingleton<test>{
 public:
-	A() {
+	test() {
 		
 	}
 

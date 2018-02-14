@@ -18,11 +18,10 @@ public:
 
 	
 #define BINDTYPE std::function<bool(UINT message, WPARAM wParam, LPARAM lParam)>
-	//하나의 메세지에 실행 되길 바라는 여러 개의 함수를 추가할 수 있다. 
+	//하나의 메세지에서 실행 되길 바라는 하나 또는 여러 개의 함수를 추가한다.
 	void AddFuncToMsg(DWORD msg, BINDTYPE func);
 
 private:
-	
 	std::map<DWORD, std::vector<BINDTYPE>> m_mapBind;
 
 };
