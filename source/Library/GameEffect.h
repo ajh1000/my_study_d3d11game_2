@@ -38,10 +38,10 @@ public:
 
 #pragma region GLOBAL
 
-class Effects {
+class GameEffect : public GameSingleton<GameEffect>{
 public:
-	Effects();
-	~Effects();
+	GameEffect();
+	~GameEffect();
 
 	void init();
 public:

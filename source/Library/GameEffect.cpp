@@ -18,7 +18,7 @@ Effect::Effect(std::string effectName)
 #ifdef _DEBUG
 	ifstream file("./Content/shaders/" + effectName + ".cso", ios::binary | ios::ate | ios::in);
 #else
-	ifstream file("./Assets/shaders/for_release/" + effectName + ".fxo", ios::binary | ios::ate | ios::in);
+	ifstream file("./Content/shaders/" + effectName + ".cso", ios::binary | ios::ate | ios::in);
 #endif
 
 
@@ -61,15 +61,15 @@ ColorEffect::~ColorEffect()
 
 #pragma region GLOBAL
 
-Effects::Effects()
+GameEffect::GameEffect()
 {
 }
 
-Effects::~Effects()
+GameEffect::~GameEffect()
 {
 }
 
-void Effects::init()
+void GameEffect::init()
 {
 	colorEffect = make_shared<ColorEffect>("color");
 

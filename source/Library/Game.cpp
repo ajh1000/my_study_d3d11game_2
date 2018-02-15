@@ -4,6 +4,7 @@
 #include "GameWindow.h"
 #include "GameDevice.h"
 #include "GameTimer.h"
+#include "GameEffect.h"
 
 
 Game::Game()
@@ -57,6 +58,7 @@ void Game::run(unsigned int width, unsigned int height)
 	GameWindow::instance().init(width, height);
 	GameDevice::instance().init();
 	GameTimer::instance().init();
+	GameEffect::instance().init();
 
 
 	
