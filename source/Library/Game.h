@@ -7,8 +7,6 @@
 	Game 클래스를 여러개 생성하거나 삭제시켜서는 안된다. 시스템 클래스임을 명심해야한다.
 */
 
-#include "pch.h"
-
 class Game
 {
 public:
@@ -16,7 +14,7 @@ public:
 	virtual ~Game();
 
 	virtual void init()=0;
-	void run(UINT width,UINT height);
+	void run(unsigned int width, unsigned int height);
 
 private:
 	void Tick();

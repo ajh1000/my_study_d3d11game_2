@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)</TargetName>
     <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)external\effects11\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -95,6 +95,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(targetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalOptions>@includedirs.txt %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -142,17 +143,21 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameDevice.h" />
+    <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameSingleton.h" />
     <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="GameVertexDef.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameDevice.cpp" />
+    <ClCompile Include="GameEffect.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="GameVertexDef.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

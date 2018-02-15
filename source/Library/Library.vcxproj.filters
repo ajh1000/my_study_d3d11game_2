@@ -14,6 +14,8 @@
     <ClInclude Include="GameDevice.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameSingleton.h" />
+    <ClInclude Include="GameEffect.h" />
+    <ClInclude Include="GameVertexDef.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -22,5 +24,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameDevice.cpp" />
     <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="GameEffect.cpp" />
+    <ClCompile Include="GameVertexDef.cpp" />
   </ItemGroup>
 </Project>

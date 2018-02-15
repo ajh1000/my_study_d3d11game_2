@@ -1,5 +1,10 @@
 #include "GameApp.h"
 
+#include <memory>
+#include <exception>
+#include <iostream>
+using namespace std;
+#include <consoleapi.h>
 
 void main()
 {

@@ -1,9 +1,6 @@
 #pragma once
 
 #include "pch.h"
-#include "GameSingleton.h"
-
-using namespace Microsoft::WRL;
 
 class GameDevice : public GameSingleton<GameDevice>
 {

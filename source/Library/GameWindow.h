@@ -1,5 +1,5 @@
 #pragma once
-#include "GameSingleton.h"
+#include "pch.h"
 
 class GameWindow : public GameSingleton<GameWindow>
 {

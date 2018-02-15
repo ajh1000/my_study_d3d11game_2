@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 
-#include "GameSingleton.h"
 class GameTimer  : public GameSingleton<GameTimer>
 {
 public:

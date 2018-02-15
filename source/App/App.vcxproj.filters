@@ -24,21 +24,15 @@
     <ClCompile Include="GameTriangle.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="GameTitle.cpp">
-      <Filter>GameScene</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameTriangle.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="GameTitle.h">
-      <Filter>GameScene</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Test.fx">
+    <FxCompile Include="color.fx">
       <Filter>Content\Shaders</Filter>
     </FxCompile>
   </ItemGroup>

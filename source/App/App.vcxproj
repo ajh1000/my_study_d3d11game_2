@@ -102,12 +102,12 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>del /F "$(ProjDir)Content\Shaders\*.cso"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>mkdir "$(OutDir)Content\Shaders"
-copy "$(ProjDir)Content\Shaders\*cso" "$(OutDir)Content\Shaders\"</Command>
+      <Command>rmdir /S /Q "$(OutDir)Content"
+mkdir "$(OutDir)Content\Shaders"
+xcopy /E /Y "$(ProjDir)Content" "$(OutDir)Content"</Command>
     </PostBuildEvent>
     <FxCompile>
       <ObjectFileOutput>$(ProjDir)Content\Shaders\%(Filename).cso</ObjectFileOutput>
@@ -160,17 +160,15 @@ copy "$(ProjDir)Content\Shaders\*cso" "$(OutDir)Content\Shaders\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp" />
-    <ClCompile Include="GameTitle.cpp" />
     <ClCompile Include="GameTriangle.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h" />
-    <ClInclude Include="GameTitle.h" />
     <ClInclude Include="GameTriangle.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Test.fx">
+    <FxCompile Include="color.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

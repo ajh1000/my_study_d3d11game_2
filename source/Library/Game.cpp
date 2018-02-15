@@ -5,7 +5,6 @@
 #include "GameDevice.h"
 #include "GameTimer.h"
 
-#include <d3dx11effect.h>
 
 Game::Game()
 {
@@ -49,7 +48,7 @@ void Game::render()
 }
 
 
-void Game::run(UINT width, UINT height)
+void Game::run(unsigned int width, unsigned int height)
 {
 	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
@@ -61,30 +60,6 @@ void Game::run(UINT width, UINT height)
 
 
 	
-#ifdef _DEBUG
-	ifstream file("./Content/shaders/test.cso" , ios::binary | ios::ate | ios::in);
-#else
-	ifstream file("./Assets/shaders/for_release/" + effectName + ".fxo", ios::binary | ios::ate | ios::in);
-#endif
-
-
-	if (file.is_open())
-	{
-		UINT size = static_cast<UINT>( file.tellg());
-		
-		vector<char> buffer(size);
-
-		file.seekg(0, ios::beg);
-		file.read(buffer.data(), size);
-		file.close();
-
-		ComPtr<ID3DX11Effect> effect;
-		HRESULT hr = D3DX11CreateEffectFromMemory(buffer.data(), size, 0, 
-			GameDevice::instance().m_device.Get(), effect.GetAddressOf());
-	}
-	else 
-		throw std::exception("file read exception");
-
 	//user's init() - virtual func
 	init();
 
