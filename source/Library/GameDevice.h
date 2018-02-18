@@ -37,6 +37,9 @@ private:
 	void initD3D();
 	void onResize();
 
+	DXGI_SAMPLE_DESC getHighestSampleCountDesc();
+	DXGI_SAMPLE_DESC getSampleCountDesc(UINT count);
+
 public:
 	ComPtr<ID3D11Device> m_device;
 	ComPtr<ID3D11DeviceContext> m_context;
@@ -45,6 +48,7 @@ public:
 	ComPtr< IDXGISwapChain > m_swapChain;
 	vector<DXGI_SAMPLE_DESC > m_arrSampleDesc;
 	UINT m_defaultSampleCount = 4;
+
 
 	ComPtr<ID3D11Texture2D> m_depthStencilBuffer;
 	ComPtr<ID3D11DepthStencilView> m_depthStencilView;

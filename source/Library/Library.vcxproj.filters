@@ -16,6 +16,7 @@
     <ClInclude Include="GameSingleton.h" />
     <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameVertexDef.h" />
+    <ClInclude Include="GameScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -26,5 +27,6 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GameEffect.cpp" />
     <ClCompile Include="GameVertexDef.cpp" />
+    <ClCompile Include="GameScene.cpp" />
   </ItemGroup>
 </Project>

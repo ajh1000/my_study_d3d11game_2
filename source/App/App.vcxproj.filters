@@ -8,14 +8,14 @@
     <Filter Include="GameObject">
       <UniqueIdentifier>{958637a4-9a45-4ec5-bb06-5798fcc53e15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameScene">
-      <UniqueIdentifier>{06dd7702-bd32-4f7e-bcfd-857242c663dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Content">
       <UniqueIdentifier>{d327d031-730b-4f4b-b120-6f56c24fe4a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Content\Shaders">
       <UniqueIdentifier>{1632d36b-e56a-4916-af53-1a6e8468fbba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScene">
+      <UniqueIdentifier>{06dd7702-bd32-4f7e-bcfd-857242c663dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -24,12 +24,14 @@
     <ClCompile Include="GameTriangle.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="SceneTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameTriangle.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="SceneTitle.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="color.fx">

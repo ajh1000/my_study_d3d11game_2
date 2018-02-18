@@ -153,6 +153,7 @@
     <ClInclude Include="GameDevice.h" />
     <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameSingleton.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameVertexDef.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="GameDevice.cpp" />
     <ClCompile Include="GameEffect.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GameVertexDef.cpp" />
     <ClCompile Include="GameWindow.cpp" />

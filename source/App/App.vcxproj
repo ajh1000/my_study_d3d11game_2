@@ -102,7 +102,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>del /F "$(ProjDir)Content\Shaders\*.cso"</Command>
+      <Command>del "$(ProjDir)Content\Shaders\*.cso"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>rmdir /S /Q "$(OutDir)Content"
@@ -162,10 +162,12 @@ xcopy /E /Y "$(ProjDir)Content" "$(OutDir)Content"</Command>
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameTriangle.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameTriangle.h" />
+    <ClInclude Include="SceneTitle.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="color.fx">

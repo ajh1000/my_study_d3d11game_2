@@ -7,7 +7,8 @@
 
 RasterizerState rasterizerState
 {
-    FrontCounterClockwise = true;
+    CullMode = NONE;
+    //FrontCounterClockwise = false;
 };
 
 cbuffer cbPerObject

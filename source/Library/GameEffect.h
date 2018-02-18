@@ -5,7 +5,6 @@
 
 #pragma region IMPLEMENTAIONs
 
-//EFFECTs
 class Effect {
 public:
 	Effect(std::string effectName);

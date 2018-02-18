@@ -59,8 +59,8 @@ LRESULT GameWindow::CustomMsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 
 	
 
-		for (auto o : m_mapBind) {
-			for (auto func : o.second) {
+		for (auto& o : m_mapBind) {
+			for (auto& func : o.second) {
 				func(message, wParam, lParam);
 			}
 		}

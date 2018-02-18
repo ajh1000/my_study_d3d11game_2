@@ -78,22 +78,15 @@ void GameDevice::initD3D()
 	sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-	//Use 4x MSAA
+	//Use MSAA
 	if (m_arrSampleDesc.size() > 0)
 	{
-		UINT idx;
+		DXGI_SAMPLE_DESC desc = getHighestSampleCountDesc();
 
-		for (idx = 0; idx< m_arrSampleDesc.size(); ++idx) {
-			if (m_arrSampleDesc[idx].Count == m_defaultSampleCount)
-			{
-				break;
-			}
-		}
-
-		sd.SampleDesc.Count = m_arrSampleDesc[idx].Count;
-		sd.SampleDesc.Quality = m_arrSampleDesc[idx].Quality;
+		sd.SampleDesc.Count = desc.Count;
+		sd.SampleDesc.Quality = desc.Quality;
 	}
-	// No MSAA
+	//No MSAA
 	else
 	{
 		sd.SampleDesc.Count = 1;
@@ -137,6 +130,7 @@ void GameDevice::onResize()
 	// Resize the swap chain and recreate the render target view.
 	RECT rc = {};
 	GetClientRect(m_hWnd, &rc);
+
 	m_swapChain->ResizeBuffers(1, rc.right,rc.bottom, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 	ComPtr <ID3D11Texture2D> backBuffer;
 	m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf()));
@@ -151,22 +145,15 @@ void GameDevice::onResize()
 	depthStencilDesc.ArraySize = 1;
 	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	//Use 4x MSAA
+	//Use MSAA
 	if (m_arrSampleDesc.size() > 0)
 	{
-		UINT idx;
+		DXGI_SAMPLE_DESC desc = getHighestSampleCountDesc();
 
-		for (idx = 0; idx< m_arrSampleDesc.size(); ++idx) {
-			if (m_arrSampleDesc[idx].Count == m_defaultSampleCount)
-			{
-				break;
-			}
-		}
-
-		depthStencilDesc.SampleDesc.Count = m_arrSampleDesc[idx].Count;
-		depthStencilDesc.SampleDesc.Quality = m_arrSampleDesc[idx].Quality;
+		depthStencilDesc.SampleDesc.Count = desc.Count;
+		depthStencilDesc.SampleDesc.Quality = desc.Quality;
 	}
-	// No MSAA
+	//No MSAA
 	else
 	{
 		depthStencilDesc.SampleDesc.Count = 1;
@@ -200,6 +187,29 @@ void GameDevice::onResize()
 	m_screenViewport.MaxDepth = 1.0f;
 
 	m_context->RSSetViewports(1, &m_screenViewport);
+}
+
+DXGI_SAMPLE_DESC GameDevice::getHighestSampleCountDesc()
+{
+	return m_arrSampleDesc.back();
+}
+
+DXGI_SAMPLE_DESC GameDevice::getSampleCountDesc(UINT count)
+{
+	DXGI_SAMPLE_DESC desc;
+	UINT idx;
+
+	for (idx = 0; idx< m_arrSampleDesc.size(); ++idx) {
+		if (m_arrSampleDesc[idx].Count == count)
+		{
+			break;
+		}
+	}
+
+	desc.Count = m_arrSampleDesc[idx].Count;
+	desc.Quality = m_arrSampleDesc[idx].Quality;
+
+	return desc;
 }
 
 void GameDevice::initAdapterInfo()
@@ -244,6 +254,7 @@ void GameDevice::initAdapterInfo()
 			{
 				m_displayInfo.numerator = displayModeList[i].RefreshRate.Numerator / 1000;
 				m_displayInfo.denominator = displayModeList[i].RefreshRate.Denominator / 1000;
+				break;
 			}
 		}
 	}

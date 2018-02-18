@@ -1,5 +1,9 @@
 #include "GameApp.h"
 
+
+
+#include "pch.h"
+
 void main()
 {
 	unique_ptr< GameApp > game = make_unique<GameApp>();
