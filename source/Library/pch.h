@@ -73,4 +73,13 @@ using namespace DirectX::SimpleMath;
 
 	# ComPtr operator& 
 	operator& maps to ReleaseAndGetAddressOf()
+
+	# LH & RH
+	왼손 좌표계를 기준으로 만들어진 오브젝트들을 오른손 좌표계에 사용하고싶다면,
+	z축 값에 -1을 곱한다. 그리고 왼손 좌표계에서 오브젝트를 바라봤을때의 장면과
+	똑같은 장면을 오른손 좌표계에서도 보고싶다면 view 행렬의 eye의 포지션을 z축 반전시켜줘한다.
+
+	#effects11 state Groups
+	https://msdn.microsoft.com/en-us/library/windows/desktop/bb205052(v=vs.85).aspx
+	https://msdn.microsoft.com/en-us/library/windows/desktop/bb205053(v=vs.85).aspx
 */

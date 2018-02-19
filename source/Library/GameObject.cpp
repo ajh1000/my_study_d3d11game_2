@@ -7,13 +7,6 @@
 GameObject::GameObject()
 	:m_isDynamicVertex(false)
 {
-	/*
-	view = XMMatrixLookAtLH(Vector3(0, 0, -7.f),
-		Vector3::Zero, Vector3::UnitY);
-	proj = XMMatrixPerspectiveFovLH(XM_PI / 4.f,
-		float(GameDevice::instance().m_screenViewport.Width) / 
-		float(GameDevice::instance().m_screenViewport.Height), 0.1f, 1000.f);
-	*/
 	view = Matrix::CreateLookAt(Vector3(0, 0, 7.f),
 		Vector3::Zero, Vector3(0,1,0));
 	proj = Matrix::CreatePerspectiveFieldOfView(XM_PI / 4.f,
