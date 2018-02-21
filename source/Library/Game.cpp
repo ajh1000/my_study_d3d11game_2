@@ -50,15 +50,6 @@ void Game::update()
 {
 	GameInput::instance().update();
 
-	if (GameInput::instance().m_isPressed == true) {
-		cout << "A pressed" << endl;
-	}
-	if (GameInput::instance().m_isPressing == true) {
-		cout << "A pressing" << endl;
-	}
-	if (GameInput::instance().m_isReleased == true) {
-		cout << "A released" << endl;
-	}
 
 	m_scene->update();
 

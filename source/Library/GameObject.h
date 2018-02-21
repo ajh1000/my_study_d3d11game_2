@@ -2,6 +2,7 @@
 
 #include "GameDevice.h"
 #include "GameTimer.h"
+#include "GameInput.h"
 
 using namespace SimpleMath;
 

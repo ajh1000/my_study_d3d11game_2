@@ -7,7 +7,6 @@ GameInput::GameInput()
 	:m_counterPressed(0),
 	m_counterReleased(0)
 {
-	
 }
 
 
@@ -43,9 +42,14 @@ void GameInput::init()
 
 		if (raw->header.dwType == RIM_TYPEKEYBOARD)
 		{
-		
 			if (raw->data.keyboard.Flags == 0) {
-				m_isPressed = true;
+				if (m_isPressing==true) {
+					m_isPressed = false;
+				}
+				else {
+					m_isPressed = true;
+				}
+				
 				m_isPressing = true;
 				m_isReleased = false;
 			}
