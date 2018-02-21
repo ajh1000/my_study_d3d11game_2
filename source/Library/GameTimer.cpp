@@ -29,7 +29,8 @@ GameTimer::GameTimer()
 	m_framesThisSecond(0),
 	m_leftoverSecs(0),
 	m_delta(0),
-	m_elapsedTime(0)
+	m_elapsedTime(0),
+	m_isLog(0)
 
 {
 	m_last = high_resolution_clock::now();
@@ -89,9 +90,11 @@ void GameTimer::Tick(std::function<void()> Update)
 		m_secCounter = 0;
 
 #ifdef _DEBUG
-		cout << "total : " << getTotalElapsedTime() << endl;
-		cout << "delta : " << getDelta() << endl;
-		cout << "fps : " << getFPSCounts() << endl;
+		if (m_isLog == true) {
+			cout << "total : " << getTotalElapsedTime() << endl;
+			cout << "delta : " << getDelta() << endl;
+			cout << "fps : " << getFPSCounts() << endl;
+		}
 #endif
 	}
 

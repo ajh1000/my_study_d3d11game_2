@@ -6,6 +6,7 @@
 #include "GameTimer.h"
 #include "GameEffect.h"
 #include "GameScene.h"
+#include "GameInput.h"
 
 
 Game::Game()
@@ -47,7 +48,20 @@ void Game::Tick()
 
 void Game::update()
 {
+	GameInput::instance().update();
+
+	if (GameInput::instance().m_isPressed == true) {
+		cout << "A pressed" << endl;
+	}
+	if (GameInput::instance().m_isPressing == true) {
+		cout << "A pressing" << endl;
+	}
+	if (GameInput::instance().m_isReleased == true) {
+		cout << "A released" << endl;
+	}
+
 	m_scene->update();
+
 }
 
 void Game::render()
@@ -76,6 +90,7 @@ void Game::run(unsigned int width, unsigned int height)
 	GameDevice::instance().init();
 	GameTimer::instance().init();
 	GameEffect::instance().init();
+	GameInput::instance().init();
 
 
 	
