@@ -17,7 +17,7 @@ public:
 	HINSTANCE m_hInst;
 
 	
-#define BINDTYPE std::function<bool(WPARAM wParam, LPARAM lParam)>
+#define BINDTYPE std::function<void(WPARAM wParam, LPARAM lParam)>
 	//하나의 메세지에서 실행 되길 바라는 하나 또는 여러 개의 함수를 추가한다.
 	void AddFuncToMsg(DWORD msg, BINDTYPE func);
 

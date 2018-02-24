@@ -47,38 +47,6 @@ void GameWindow::init(UINT width, UINT height)
 		centerX, centerY, wr.right, wr.bottom, 0, 0, 0, this);
 }
 
-void GameWindow::AddFuncToMsg(DWORD msg, BINDTYPE func)
-{
-	m_mapBind[msg].push_back(func);
-}
-
-LRESULT GameWindow::CustomMsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	PAINTSTRUCT ps;
-	HDC hdc;
-
-
-		for (auto& o : m_mapBind[message]) {
-
-			o(wParam, lParam);
-		}
-	
-
-
-	switch (message)
-	{
-	case WM_DESTROY:
-		PostQuitMessage(S_OK);
-		break;
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
-		break;
-	}
-
-	return DefWindowProc(hWnd, message, wParam, lParam);
-}
-
 
 LRESULT GameWindow::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -95,4 +63,37 @@ LRESULT GameWindow::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	}
 
 	return pThis->CustomMsgProc(hwnd, uMsg, wParam, lParam);
+}
+
+
+void GameWindow::AddFuncToMsg(DWORD msg, BINDTYPE func)
+{
+	m_mapBind[msg].push_back(func);
+}
+
+
+LRESULT GameWindow::CustomMsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	for (auto& func : m_mapBind[message]) {
+		func(wParam, lParam);
+	}
+
+
+
+	switch (message)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(S_OK);
+		break;
+	case WM_PAINT:
+		PAINTSTRUCT ps;
+		HDC hdc;
+
+		hdc = BeginPaint(hWnd, &ps);
+		EndPaint(hWnd, &ps);
+		break;
+	}
+
+	return DefWindowProc(hWnd, message, wParam, lParam);
 }
