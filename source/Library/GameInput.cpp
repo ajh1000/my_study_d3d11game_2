@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GameInput.h"
-#include <hidsdi.h>
 #include "GameWindow.h"
+#include <hidsdi.h>
 
 GameInput::GameInput()
 	:m_cntPressed(0),
@@ -42,16 +42,65 @@ void GameInput::init()
 
 void GameInput::update()
 {
-	checkPressedReleased();
+	//check pressed&released state. only available at current frame.
+	for (auto &o : m_arrKeyCodes)
+	{
+		if (o.isPressed == true) {
+			if (o.prevPressed == true) {
+				o.isPressed = false;
+			}
+		}
 
-	//check key state
+		if (o.isReleased == true) {
+			if (o.prevReleased == true) {
+				o.isReleased = false;
+			}
+		}
 
-
-
-	//check actions
+		o.prevPressed = o.isPressed;
+		o.prevReleased = o.isReleased;
+	}
 
 
 }
+
+
+void GameInput::getInput(LPARAM lParam)
+{
+	UINT size = 40;
+	BYTE data[40];
+	ZeroMemory(data, size);
+
+	GetRawInputData((HRAWINPUT)lParam, RID_INPUT, data, &size,
+		sizeof(RAWINPUTHEADER));
+
+	RAWINPUT* raw = (RAWINPUT*)&data;
+
+	if (raw->header.dwType == RIM_TYPEKEYBOARD)
+	{
+		unsigned char key = static_cast<unsigned char>(raw->data.keyboard.VKey);
+
+		if (raw->data.keyboard.Flags == 0) {
+			if (m_arrKeyCodes[key].isHeld == true) {
+				m_arrKeyCodes[key].isPressed = false;
+			}
+			else {
+				m_arrKeyCodes[key].isPressed = true;
+			}
+
+			m_isAnyKeyPressed = true;
+			m_arrKeyCodes[key].isHeld = true;
+			m_arrKeyCodes[key].isReleased = false;
+		}
+		else {
+			m_isAnyKeyPressed = false;
+			m_arrKeyCodes[key].isHeld = false;
+			m_arrKeyCodes[key].isReleased = true;
+		}
+	}
+}
+
+
 bool GameInput::isAnyKeyPressed()
 {
 	return m_isAnyKeyPressed;
@@ -89,73 +138,7 @@ void GameInput::setAction(std::string action, KeyCode keyCode)
 }
 
 
-void GameInput::getInput(LPARAM lParam)
-{
-	UINT size = 40;
-	BYTE data[40];
-	ZeroMemory(data, size);
-
-	GetRawInputData((HRAWINPUT)lParam, RID_INPUT, data, &size,
-		sizeof(RAWINPUTHEADER));
-
-	RAWINPUT* raw = (RAWINPUT*)&data;
-
-	if (raw->header.dwType == RIM_TYPEKEYBOARD)
-	{
-		//unsigned char key = MapVirtualKey(raw->data.keyboard.VKey, MAPVK_VK_TO_CHAR);
-		unsigned char key = raw->data.keyboard.VKey;
-
-		if (raw->data.keyboard.Flags == 0) {
-			//if (m_isPressing == true) {
-			if (m_arrKeyCodes[key].isHeld == true) {
-				m_arrKeyCodes[key].isPressed = false;
-				//m_isPressed = false;
-			}
-			else {
-				m_arrKeyCodes[key].isPressed = true;
-				//m_isPressed = true;
-			}
-
-			m_isAnyKeyPressed = true;
-			m_arrKeyCodes[key].isHeld = true;
-			m_arrKeyCodes[key].isReleased = false;
-			//m_isPressing = true;
-			//m_isReleased = false;
-		}
-		else {
-			m_isAnyKeyPressed = false;
-			m_arrKeyCodes[key].isPressed = false;
-			m_arrKeyCodes[key].isHeld = false;
-			m_arrKeyCodes[key].isReleased = true;
-
-			//m_isPressing = false;
-			//m_isReleased = true;
-		}
-	}
-}
-
-void GameInput::checkPressedReleased()
-{
-	//cntXXXXXX 변수를 둔 이유 :
-	//이번 프레임에서만 눌렀다/땠다 이벤트를 발생시킴.
-	//다음 프레임에서는 눌렀다/땠다 이벤트를 종료시킴.
 
 
-	for (auto &o : m_arrKeyCodes)
-	{
-		if (o.isPressed == true) {
-			if (o.prevPressed == true) {
-				o.isPressed = false;
-			}
-		}
-
-		if (o.isReleased == true) {
-			if (o.prevReleased == true) {
-				o.isReleased = false;
-			}
-		}
-
-		o.prevPressed = o.isPressed;
-		o.prevReleased = o.isReleased;
-	}
-}
+//#backup codes
+//unsigned char key = MapVirtualKey(raw->data.keyboard.VKey, MAPVK_VK_TO_CHAR);

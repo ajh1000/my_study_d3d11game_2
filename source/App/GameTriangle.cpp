@@ -14,24 +14,6 @@ GameTriangle::~GameTriangle()
 
 void GameTriangle::init()
 { 
-	/*
-
-	VertexPositionColor vertices[3] = {
-		Vector3(-1,-1,0),Vector4( DirectX::Colors::Red),
-		Vector3(1,-1,0),Vector4(DirectX::Colors::Black),
-		Vector3(0,1,0),Vector4(DirectX::Colors::Blue)
-
-	};
-
-	createStaticVertexBuffer(vertices, sizeof(vertices));
-
-	UINT indices[] = {
-		0,2,1
-	};
-	createIndexBuffer(indices, sizeof(indices));
-	*/
-
-
 
 	//VB
 	VertexPositionColor vertices[] =

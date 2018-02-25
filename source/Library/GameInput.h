@@ -1,15 +1,13 @@
 #pragma once
-#include "GameSingleton.h"
-#include "GameKeyCodes.h"
+#include "GameKeyCode.h"
 
 class GameInput : public GameSingleton<GameInput>
 {
 private:
 	struct KeyState {
 		KeyState():isPressed(0),isHeld(0),isReleased(0),
-		cntPressed(0),cntReleased(0), prevPressed(0), prevReleased(0) {}
+			prevPressed(0), prevReleased(0) {}
 		bool isPressed, isHeld, isReleased;
-		unsigned char cntPressed,cntReleased;
 		bool prevPressed,prevReleased;
 	};
 
@@ -35,8 +33,6 @@ public:
 private:
 	void getInput(LPARAM lParam);
 
-	//Pressed, Released 판정 관리 함수
-	void checkPressedReleased();
 private:
 	bool m_isAnyKeyPressed = false;
 	//bool m_isPressed = false;

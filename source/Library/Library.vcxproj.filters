@@ -19,7 +19,7 @@
     <ClInclude Include="GameInput.h">
       <Filter>INPUT</Filter>
     </ClInclude>
-    <ClInclude Include="GameKeyCodes.h">
+    <ClInclude Include="GameKeyCode.h">
       <Filter>INPUT</Filter>
     </ClInclude>
   </ItemGroup>

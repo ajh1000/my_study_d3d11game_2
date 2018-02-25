@@ -153,7 +153,7 @@
     <ClInclude Include="GameDevice.h" />
     <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameInput.h" />
-    <ClInclude Include="GameKeyCodes.h" />
+    <ClInclude Include="GameKeyCode.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameSingleton.h" />
