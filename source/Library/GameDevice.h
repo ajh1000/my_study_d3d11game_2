@@ -31,14 +31,14 @@ public:
 
 	
 	void init();
+	DXGI_SAMPLE_DESC getHighestSampleCountDesc();
+	DXGI_SAMPLE_DESC getSampleCountDesc(UINT count);
 
 private:
 	void initAdapterInfo();
 	void initD3D();
-	void onResize();
+	void onResize(UINT width,UINT height);
 
-	DXGI_SAMPLE_DESC getHighestSampleCountDesc();
-	DXGI_SAMPLE_DESC getSampleCountDesc(UINT count);
 
 public:
 	ComPtr<ID3D11Device> m_device;

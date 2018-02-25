@@ -18,6 +18,12 @@ void GameDevice::init()
 
 	initAdapterInfo();
 	initD3D();
+
+
+	GameWindow::instance().AddFuncToMsg(WM_SIZE, [&](WPARAM wParam, LPARAM lParam) {
+		//this->onResize();
+	});
+	
 }
 
 
@@ -116,10 +122,10 @@ void GameDevice::initD3D()
 		throw std::exception("create swapchain failed");
 	}
 
-	onResize();
+	onResize(rc.right,rc.bottom);
 }
 
-void GameDevice::onResize()
+void GameDevice::onResize(UINT width, UINT height)
 {
 	// Release the old views, as they hold references to the buffers we
 	// will be destroying.  Also release the old depth/stencil buffer.
@@ -128,10 +134,7 @@ void GameDevice::onResize()
 	m_depthStencilBuffer.Reset();
 
 	// Resize the swap chain and recreate the render target view.
-	RECT rc = {};
-	GetClientRect(m_hWnd, &rc);
-
-	m_swapChain->ResizeBuffers(1, rc.right,rc.bottom, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+	m_swapChain->ResizeBuffers(1, width,height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 	ComPtr <ID3D11Texture2D> backBuffer;
 	m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf()));
 	m_device->CreateRenderTargetView(backBuffer.Get(), 0, m_renderTargetView.GetAddressOf());
@@ -139,8 +142,8 @@ void GameDevice::onResize()
 	// Create the depth/stencil buffer and view.
 	D3D11_TEXTURE2D_DESC depthStencilDesc;
 
-	depthStencilDesc.Width = rc.right;
-	depthStencilDesc.Height = rc.bottom;
+	depthStencilDesc.Width = width;
+	depthStencilDesc.Height = height;
 	depthStencilDesc.MipLevels = 1;
 	depthStencilDesc.ArraySize = 1;
 	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -181,12 +184,14 @@ void GameDevice::onResize()
 
 	m_screenViewport.TopLeftX = 0;
 	m_screenViewport.TopLeftY = 0;
-	m_screenViewport.Width = static_cast<float>(rc.right);
-	m_screenViewport.Height = static_cast<float>(rc.bottom);
+	m_screenViewport.Width = static_cast<float>(width);
+	m_screenViewport.Height = static_cast<float>(height);
 	m_screenViewport.MinDepth = 0.0f;
 	m_screenViewport.MaxDepth = 1.0f;
 
 	m_context->RSSetViewports(1, &m_screenViewport);
+
+	cout << "onResize() called" << endl;
 }
 
 DXGI_SAMPLE_DESC GameDevice::getHighestSampleCountDesc()
