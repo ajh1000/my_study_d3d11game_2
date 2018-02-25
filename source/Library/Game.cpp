@@ -40,10 +40,10 @@ void Game::Tick()
 {
 	GameTimer::instance().Tick([&]() {
 		update();
+		render();
 
 	});
 
-	render();
 }
 
 void Game::update()

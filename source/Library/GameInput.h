@@ -33,16 +33,19 @@ public:
 private:
 	void getInput(LPARAM lParam);
 
+	//outState==0 means button downed, outState==1 means button released.
+	void analyzeMouseState(unsigned short &input,  bool &outState, KeyCode &outKey);
 private:
+	bool m_isPaused = false;
 	bool m_isAnyKeyPressed = false;
-	//bool m_isPressed = false;
-	//bool m_isPressing = false;
-	//bool m_isReleased = false;
-
-	unsigned char m_cntPressed = 0;
-	unsigned char m_cntReleased = 0;
 
 	std::vector<KeyState> m_arrKeyCodes;
+	std::vector<KeyState> m_arrReserve;
 	std::map<std::string,KeyCode > m_mapAction;
+
+	signed short m_wheelValue;
+	long m_mouseX, m_mouseY;
+
+	unsigned char m_arrSize;
 };
 

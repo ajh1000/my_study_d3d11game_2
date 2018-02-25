@@ -2,7 +2,8 @@
 #include "GameWindow.h"
 
 
-GameWindow::GameWindow()
+GameWindow::GameWindow():
+	m_isPaused(false)
 {
 }
 
@@ -74,13 +75,6 @@ void GameWindow::AddFuncToMsg(DWORD msg, BINDTYPE func)
 
 LRESULT GameWindow::CustomMsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-
-	for (auto& func : m_mapBind[message]) {
-		func(wParam, lParam);
-	}
-
-
-
 	switch (message)
 	{
 	case WM_DESTROY:
@@ -93,6 +87,16 @@ LRESULT GameWindow::CustomMsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		hdc = BeginPaint(hWnd, &ps);
 		EndPaint(hWnd, &ps);
 		break;
+	case WM_SETFOCUS:
+		m_isPaused = false;
+		break;
+	case WM_KILLFOCUS:
+		m_isPaused = true;
+		break;
+	}
+
+	for (auto& func : m_mapBind[message]) {
+		func(wParam, lParam);
 	}
 
 	return DefWindowProc(hWnd, message, wParam, lParam);

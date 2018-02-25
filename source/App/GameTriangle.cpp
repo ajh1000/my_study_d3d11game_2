@@ -66,17 +66,18 @@ void GameTriangle::init()
 
 void GameTriangle::update()
 {
+	/*
 	if (GameInput::instance().isKeyPressed(KeyCode::W)) {
 		cout << "W pressed" << endl;
 	}
-	if (GameInput::instance().isKeyPressed(KeyCode::S)) {
+	if (GameInput::instance().isKeyPressed(KeyCode::E)) {
 		cout << "S pressed" << endl;
 	}
 
 	if (GameInput::instance().isKeyHeld(KeyCode::W)) {
 		cout << "W held" << endl;
 	}
-	if (GameInput::instance().isKeyHeld(KeyCode::S)) {
+	if (GameInput::instance().isKeyHeld(KeyCode::E)) {
 		cout << "S held" << endl;
 	}
 
@@ -84,7 +85,52 @@ void GameTriangle::update()
 	if (GameInput::instance().isKeyReleased(KeyCode::W)) {
 		cout << "W Released" << endl;
 	}
-	if (GameInput::instance().isKeyReleased(KeyCode::S)) {
+	if (GameInput::instance().isKeyReleased(KeyCode::E)) {
 		cout << "S Released" << endl;
+	}
+
+	if (GameInput::instance().isKeyPressed(KeyCode::LBUTTON)) {
+		cout << "LBUTTON pressed" << endl;
+	}
+	if (GameInput::instance().isKeyPressed(KeyCode::RBUTTON)) {
+		cout << "RBUTTON pressed" << endl;
+	}
+
+	if (GameInput::instance().isKeyHeld(KeyCode::LBUTTON)) {
+		cout << "LBUTTON held" << endl;
+	}
+	if (GameInput::instance().isKeyHeld(KeyCode::RBUTTON)) {
+		cout << "RBUTTON held" << endl;
+	}
+
+
+	if (GameInput::instance().isKeyReleased(KeyCode::LBUTTON)) {
+		cout << "LBUTTON Released" << endl;
+	}
+	if (GameInput::instance().isKeyReleased(KeyCode::RBUTTON)) {
+		cout << "RBUTTON Released" << endl;
+	}
+	*/
+
+	if (GameInput::instance().isKeyPressed(KeyCode::X1BUTTON)) {
+		cout << "X1BUTTON pressed" << endl;
+	}
+	if (GameInput::instance().isKeyPressed(KeyCode::X2BUTTON)) {
+		cout << "X2BUTTON pressed" << endl;
+	}
+
+	if (GameInput::instance().isKeyHeld(KeyCode::X1BUTTON)) {
+		cout << "X1BUTTON held" << endl;
+	}
+	if (GameInput::instance().isKeyHeld(KeyCode::X2BUTTON)) {
+		cout << "X2BUTTON held" << endl;
+	}
+
+
+	if (GameInput::instance().isKeyReleased(KeyCode::X1BUTTON)) {
+		cout << "X1BUTTON Released" << endl;
+	}
+	if (GameInput::instance().isKeyReleased(KeyCode::X2BUTTON)) {
+		cout << "X2BUTTON Released" << endl;
 	}
 }
