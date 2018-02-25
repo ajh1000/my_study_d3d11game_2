@@ -7,6 +7,9 @@ GameInput::GameInput()
 	:m_cntPressed(0),
 	m_cntReleased(0)
 {
+	m_arrKeyCodes.clear();
+	m_arrKeyCodes.resize(255);
+	m_mapAction.clear();
 }
 
 
@@ -16,7 +19,6 @@ GameInput::~GameInput()
 
 void GameInput::init()
 {
-
 	RAWINPUTDEVICE Rid;
 
 	Rid.usUsagePage = HID_USAGE_PAGE_GENERIC;
@@ -33,33 +35,60 @@ void GameInput::init()
 		this->getInput(lParam);
 	});
 
+	//register pre-built commands 
+	setAction("fire1", KeyCode::LBUTTON);
+	setAction("fire2", KeyCode::RBUTTON);
 }
 
 void GameInput::update()
 {
 	checkPressedReleased();
 
+	//check key state
+
+
+
+	//check actions
+
 
 }
-void GameInput::isKeyPressed(KeyCode keyCode)
+bool GameInput::isAnyKeyPressed()
 {
+	return m_isAnyKeyPressed;
 }
-void GameInput::isKeyHeld(KeyCode keyCode)
+bool GameInput::isKeyPressed(KeyCode keyCode)
 {
+	return m_arrKeyCodes[keyCode].isPressed;
 }
-void GameInput::isKeyReleased(KeyCode keyCode)
+bool GameInput::isKeyHeld(KeyCode keyCode)
 {
+	return m_arrKeyCodes[keyCode].isHeld;
 }
-void GameInput::isActionPressed(std::string action)
+bool GameInput::isKeyReleased(KeyCode keyCode)
 {
+	return m_arrKeyCodes[keyCode].isReleased;
 }
-void GameInput::isActionHeld(std::string action)
-{
-}
-void GameInput::isActionReleased(std::string action)
-{
 
+
+bool GameInput::isActionPressed(std::string action)
+{
+	return m_arrKeyCodes[m_mapAction[action]].isPressed;
 }
+bool GameInput::isActionHeld(std::string action)
+{
+	return m_arrKeyCodes[m_mapAction[action]].isHeld;
+}
+bool GameInput::isActionReleased(std::string action)
+{
+	return m_arrKeyCodes[m_mapAction[action]].isReleased;
+}
+
+void GameInput::setAction(std::string action, KeyCode keyCode)
+{
+	m_mapAction[action] = keyCode;
+}
+
+
 void GameInput::getInput(LPARAM lParam)
 {
 	UINT size = 40;
@@ -73,80 +102,60 @@ void GameInput::getInput(LPARAM lParam)
 
 	if (raw->header.dwType == RIM_TYPEKEYBOARD)
 	{
-		unsigned char key = MapVirtualKey(raw->data.keyboard.VKey, MAPVK_VK_TO_CHAR);
+		//unsigned char key = MapVirtualKey(raw->data.keyboard.VKey, MAPVK_VK_TO_CHAR);
+		unsigned char key = raw->data.keyboard.VKey;
 
 		if (raw->data.keyboard.Flags == 0) {
-			if (m_isPressing == true) {
-				m_isPressed = false;
+			//if (m_isPressing == true) {
+			if (m_arrKeyCodes[key].isHeld == true) {
+				m_arrKeyCodes[key].isPressed = false;
+				//m_isPressed = false;
 			}
 			else {
-				m_isPressed = true;
+				m_arrKeyCodes[key].isPressed = true;
+				//m_isPressed = true;
 			}
 
-			m_isPressing = true;
-			m_isReleased = false;
+			m_isAnyKeyPressed = true;
+			m_arrKeyCodes[key].isHeld = true;
+			m_arrKeyCodes[key].isReleased = false;
+			//m_isPressing = true;
+			//m_isReleased = false;
 		}
 		else {
-			m_isPressing = false;
-			m_isReleased = true;
+			m_isAnyKeyPressed = false;
+			m_arrKeyCodes[key].isPressed = false;
+			m_arrKeyCodes[key].isHeld = false;
+			m_arrKeyCodes[key].isReleased = true;
+
+			//m_isPressing = false;
+			//m_isReleased = true;
 		}
 	}
 }
 
 void GameInput::checkPressedReleased()
 {
-	//m_cntXXXXXX 변수를 둔 이유 :
+	//cntXXXXXX 변수를 둔 이유 :
 	//이번 프레임에서만 눌렀다/땠다 이벤트를 발생시킴.
 	//다음 프레임에서는 눌렀다/땠다 이벤트를 종료시킴.
 
-	if (m_isPressed == true) {
-		m_cntPressed += 1;
 
-		if (m_cntPressed >= 2) {
-			m_isPressed = false;
-			m_cntPressed = 0;
-		}
-	}
-
-	if (m_isReleased == true) {
-		m_cntReleased += 1;
-
-		if (m_cntReleased >= 2) {
-			m_isReleased = false;
-			m_cntReleased = 0;
-		}
-	}
-}
-/*
-using UnityEngine;
-
-public class KeyCodeExample : MonoBehaviour
-{
-	void Update()
+	for (auto &o : m_arrKeyCodes)
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
-			Debug.Log("Space key was pressed.");
-
-		if (Input.GetKeyUp(KeyCode.Space))
-			Debug.Log("Space key was released.");
-
-			myTime = myTime + Time.deltaTime;
-
-			//held down
-		if (Input.GetButton("Fire1") && myTime > nextFire)
-		{
-			nextFire = myTime + fireDelta;
-			newProjectile = Instantiate(projectile, transform.position, transform.rotation) as GameObject;
-
-			// create code here that animates the newProjectile
-
-			nextFire = nextFire - myTime;
-			myTime = 0.0F;
+		if (o.isPressed == true) {
+			if (o.prevPressed == true) {
+				o.isPressed = false;
+			}
 		}
-		//Input.GetButtonDown <- pressed once
-		//Input.GetAxis
+
+		if (o.isReleased == true) {
+			if (o.prevReleased == true) {
+				o.isReleased = false;
+			}
+		}
+
+		o.prevPressed = o.isPressed;
+		o.prevReleased = o.isReleased;
 	}
-
-
 }
-*/

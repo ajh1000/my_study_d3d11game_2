@@ -19,6 +19,9 @@
     <ClInclude Include="GameInput.h">
       <Filter>INPUT</Filter>
     </ClInclude>
+    <ClInclude Include="GameKeyCodes.h">
+      <Filter>INPUT</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />

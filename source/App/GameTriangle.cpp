@@ -84,4 +84,25 @@ void GameTriangle::init()
 
 void GameTriangle::update()
 {
+	if (GameInput::instance().isKeyPressed(KeyCode::W)) {
+		cout << "W pressed" << endl;
+	}
+	if (GameInput::instance().isKeyPressed(KeyCode::S)) {
+		cout << "S pressed" << endl;
+	}
+
+	if (GameInput::instance().isKeyHeld(KeyCode::W)) {
+		cout << "W held" << endl;
+	}
+	if (GameInput::instance().isKeyHeld(KeyCode::S)) {
+		cout << "S held" << endl;
+	}
+
+
+	if (GameInput::instance().isKeyReleased(KeyCode::W)) {
+		cout << "W Released" << endl;
+	}
+	if (GameInput::instance().isKeyReleased(KeyCode::S)) {
+		cout << "S Released" << endl;
+	}
 }
