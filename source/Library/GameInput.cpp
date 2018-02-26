@@ -4,8 +4,8 @@
 #include <hidsdi.h>
 
 GameInput::GameInput()
-	:m_mouseX(0), m_mouseY(0), m_wheelValue(0),
-	 m_isAnyKeyPressed(false), m_isPaused(false), m_arrSize(255)
+	:m_mouseDeltaX(0), m_mouseDeltaY(0), m_wheelValue(0),
+	m_isAnyKeyPressed(false), m_isPaused(false), m_arrSize(255)
 
 {
 	m_arrKeyCodes.clear();
@@ -44,7 +44,7 @@ void GameInput::init()
 
 
 	GameWindow::instance().AddFuncToMsg(WM_INPUT, [&](WPARAM wParam, LPARAM lParam) {
-			this->getInput(lParam);
+		this->getInput(lParam);
 	});
 
 	GameWindow::instance().AddFuncToMsg(WM_SETFOCUS, [&](WPARAM wParam, LPARAM lParam) {
@@ -66,24 +66,25 @@ void GameInput::init()
 void GameInput::update()
 {
 	//check pressed&released state. only available at current frame.
-		for (auto &o : m_arrKeyCodes)
-		{
-			if (o.isPressed == true) {
-				if (o.prevPressed == true) {
-					o.isPressed = false;
-				}
+	for (auto &o : m_arrKeyCodes)
+	{
+		if (o.isPressed == true) {
+			if (o.prevPressed == true) {
+				o.isPressed = false;
+				m_isAnyKeyPressed = false;
 			}
-
-			if (o.isReleased == true) {
-				if (o.prevReleased == true) {
-					o.isReleased = false;
-				}
-			}
-
-			o.prevPressed = o.isPressed;
-			o.prevReleased = o.isReleased;
 		}
-	
+
+		if (o.isReleased == true) {
+			if (o.prevReleased == true) {
+				o.isReleased = false;
+			}
+		}
+
+		o.prevPressed = o.isPressed;
+		o.prevReleased = o.isReleased;
+	}
+
 
 }
 
@@ -116,7 +117,6 @@ void GameInput::getInput(LPARAM lParam)
 			m_arrKeyCodes[key].isReleased = false;
 		}
 		else {
-			m_isAnyKeyPressed = false;
 			m_arrKeyCodes[key].isHeld = false;
 			m_arrKeyCodes[key].isReleased = true;
 		}
@@ -125,103 +125,102 @@ void GameInput::getInput(LPARAM lParam)
 	if (raw->header.dwType == RIM_TYPEMOUSE) {
 		unsigned short rawState = raw->data.mouse.usButtonFlags;
 
-		m_mouseX = raw->data.mouse.lLastX;
-		m_mouseY = raw->data.mouse.lLastY;
-
+		m_mouseDeltaX = raw->data.mouse.lLastX;
+		m_mouseDeltaY = raw->data.mouse.lLastY;
 
 		if (rawState == RI_MOUSE_WHEEL) {
 			m_wheelValue = static_cast<signed short>(raw->data.mouse.usButtonData);
 		}
 		else {
-			bool state;
-			KeyCode key;
-			analyzeMouseState(rawState, state, key);
+			analyzeMouseState(rawState, m_arrMouseState);
 
-			//마우스 왼쪽,오른쪽 동시에 눌르면 5
-			//동시에 풀으면 10
-			//어떻게 처리해야하나
-
-			if (key != KeyCode::None)
-			{
-				if (state == 0) {
-					if (m_arrKeyCodes[key].isHeld == true) {
-						m_arrKeyCodes[key].isPressed = false;
+			for (auto &mouse : m_arrMouseState) {
+				if (mouse.state == 0) {
+					if (m_arrKeyCodes[mouse.key].isHeld == true) {
+						m_arrKeyCodes[mouse.key].isPressed = false;
 					}
 					else {
-						m_arrKeyCodes[key].isPressed = true;
+						m_arrKeyCodes[mouse.key].isPressed = true;
 					}
 
 					m_isAnyKeyPressed = true;
-					m_arrKeyCodes[key].isHeld = true;
-					m_arrKeyCodes[key].isReleased = false;
+					m_arrKeyCodes[mouse.key].isHeld = true;
+					m_arrKeyCodes[mouse.key].isReleased = false;
 				}
 				else {
-					m_isAnyKeyPressed = false;
-					m_arrKeyCodes[key].isHeld = false;
-					m_arrKeyCodes[key].isReleased = true;
+					m_arrKeyCodes[mouse.key].isHeld = false;
+					m_arrKeyCodes[mouse.key].isReleased = true;
 				}
 			}
 		}
-
-
-
 	}
 }
 
-void GameInput::analyzeMouseState(unsigned short & input, bool & outState, KeyCode & outKey)
+void GameInput::analyzeMouseState(unsigned short &input, std::vector<MouseState> &outStates)
 {
-	switch (input) {
-	case RI_MOUSE_LEFT_BUTTON_DOWN:
-		outState = 0;
-		outKey = KeyCode::LBUTTON;
-		break;
-	case RI_MOUSE_LEFT_BUTTON_UP:
-		outState = 1;
-		outKey = KeyCode::LBUTTON;
-		break;
+	outStates.clear();
+	MouseState mouse;
 
-	case RI_MOUSE_RIGHT_BUTTON_DOWN:
-		outState = 0;
-		outKey = KeyCode::RBUTTON;
-		break;
-	case RI_MOUSE_RIGHT_BUTTON_UP:
-		outState = 1;
-		outKey = KeyCode::RBUTTON;
-		break;
-
-	case RI_MOUSE_MIDDLE_BUTTON_DOWN:
-		outState = 0;
-		outKey = KeyCode::MBUTTON;
-		break;
-	case RI_MOUSE_MIDDLE_BUTTON_UP:
-		outState = 1;
-		outKey = KeyCode::MBUTTON;
-		break;
-
-	case RI_MOUSE_BUTTON_4_DOWN:
-		outState = 0;
-		outKey = KeyCode::X1BUTTON;
-		break;
-	case RI_MOUSE_BUTTON_4_UP:
-		outState = 1;
-		outKey = KeyCode::X1BUTTON;
-		break;
-
-	case RI_MOUSE_BUTTON_5_DOWN:
-		outState = 0;
-		outKey = KeyCode::X2BUTTON;
-		break;
-	case RI_MOUSE_BUTTON_5_UP:
-		outState = 1;
-		outKey = KeyCode::X2BUTTON;
-		break;
-
-
-	default:
-		outState = 0;
-		outKey = KeyCode::None;
-		break;
+	//LBUTTON
+	if (input&RI_MOUSE_LEFT_BUTTON_DOWN) {
+		mouse.state = 0;
+		mouse.key = KeyCode::LBUTTON;
+		outStates.push_back(mouse);
 	}
+	if (input&RI_MOUSE_LEFT_BUTTON_UP) {
+		mouse.state = 1;
+		mouse.key = KeyCode::LBUTTON;
+		outStates.push_back(mouse);
+	}
+
+	//RBUTTON
+	if (input&RI_MOUSE_RIGHT_BUTTON_DOWN) {
+		mouse.state = 0;
+		mouse.key = KeyCode::RBUTTON;
+		outStates.push_back(mouse);
+	}
+	if (input&RI_MOUSE_RIGHT_BUTTON_UP) {
+		mouse.state = 1;
+		mouse.key = KeyCode::RBUTTON;
+		outStates.push_back(mouse);
+	}
+
+	//MBUTTON
+	if (input&RI_MOUSE_MIDDLE_BUTTON_DOWN) {
+		mouse.state = 0;
+		mouse.key = KeyCode::MBUTTON;
+		outStates.push_back(mouse);
+	}
+	if (input&RI_MOUSE_MIDDLE_BUTTON_UP) {
+		mouse.state = 1;
+		mouse.key = KeyCode::MBUTTON;
+		outStates.push_back(mouse);
+	}
+
+	//X1BUTTON
+	if (input&RI_MOUSE_BUTTON_4_DOWN) {
+		mouse.state = 0;
+		mouse.key = KeyCode::X1BUTTON;
+		outStates.push_back(mouse);
+	}
+	if (input&RI_MOUSE_BUTTON_4_UP) {
+		mouse.state = 1;
+		mouse.key = KeyCode::X1BUTTON;
+		outStates.push_back(mouse);
+	}
+
+	//X2BUTTON
+	if (input&RI_MOUSE_BUTTON_5_DOWN) {
+		mouse.state = 0;
+		mouse.key = KeyCode::X2BUTTON;
+		outStates.push_back(mouse);
+	}
+	if (input&RI_MOUSE_BUTTON_5_UP) {
+		mouse.state = 1;
+		mouse.key = KeyCode::X2BUTTON;
+		outStates.push_back(mouse);
+	}
+
 }
 
 

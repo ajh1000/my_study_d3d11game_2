@@ -88,6 +88,7 @@ void GameTriangle::update()
 	if (GameInput::instance().isKeyReleased(KeyCode::E)) {
 		cout << "S Released" << endl;
 	}
+	*/
 
 	if (GameInput::instance().isKeyPressed(KeyCode::LBUTTON)) {
 		cout << "LBUTTON pressed" << endl;
@@ -110,7 +111,6 @@ void GameTriangle::update()
 	if (GameInput::instance().isKeyReleased(KeyCode::RBUTTON)) {
 		cout << "RBUTTON Released" << endl;
 	}
-	*/
 
 	if (GameInput::instance().isKeyPressed(KeyCode::X1BUTTON)) {
 		cout << "X1BUTTON pressed" << endl;

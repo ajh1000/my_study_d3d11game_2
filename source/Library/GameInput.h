@@ -4,11 +4,20 @@
 class GameInput : public GameSingleton<GameInput>
 {
 private:
+	//키보드, 마우스 입력 장치의 입력 상태 정보 구조체.
 	struct KeyState {
 		KeyState():isPressed(0),isHeld(0),isReleased(0),
 			prevPressed(0), prevReleased(0) {}
 		bool isPressed, isHeld, isReleased;
 		bool prevPressed,prevReleased;
+	};
+
+	//마우스 입력은 Bit 식으로 입력값이 들어오기때문에, 각각의 bit값에 해당하는 입력 정보를 저장할 수 있도록 하였다.
+	struct MouseState {
+		MouseState() : state(false),key(KeyCode::None){}
+		//state==0 means button downed, state==1 means button released.
+		bool state;
+		KeyCode key;
 	};
 
 public:
@@ -24,28 +33,35 @@ public:
 	bool isKeyHeld(KeyCode keyCode);
 	bool isKeyReleased(KeyCode keyCode);
 
-	//ex) "fire1" , "Jump" ... some kind of action name
 	bool isActionPressed(std::string action);
 	bool isActionHeld(std::string action);
 	bool isActionReleased(std::string action);
 
+	//ex) "fire1" , "Jump" ... some kind of action name
 	void setAction(std::string action,KeyCode keyCode);
 private:
 	void getInput(LPARAM lParam);
 
-	//outState==0 means button downed, outState==1 means button released.
-	void analyzeMouseState(unsigned short &input,  bool &outState, KeyCode &outKey);
+	void analyzeMouseState(unsigned short &input,std::vector<MouseState> &outStates);
 private:
-	bool m_isPaused = false;
 	bool m_isAnyKeyPressed = false;
 
+	unsigned char m_arrSize=255;
+
+	//Keyboard&Mouse states
 	std::vector<KeyState> m_arrKeyCodes;
+	
+	//copy from m_arrKeyCodes when app is paused
 	std::vector<KeyState> m_arrReserve;
-	std::map<std::string,KeyCode > m_mapAction;
 
+	//Mouse INFOs...
+	std::vector<MouseState> m_arrMouseState;
 	signed short m_wheelValue;
-	long m_mouseX, m_mouseY;
+	long m_mouseDeltaX, m_mouseDeltaY;
 
-	unsigned char m_arrSize;
+	//Action Array
+	std::map<std::string, KeyCode > m_mapAction;
+
+	
 };
 
