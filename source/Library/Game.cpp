@@ -38,18 +38,19 @@ void Game::setScene(const char * sceneName)
 
 void Game::Tick()
 {
+	
 	GameTimer::instance().Tick([&]() {
-		update();
-		render();
+		GameInput::instance().update();
 
+		this->update();
+
+		this->render();
 	});
 
 }
 
 void Game::update()
 {
-	GameInput::instance().update();
-
 
 	m_scene->update();
 
@@ -79,7 +80,7 @@ void Game::run(unsigned int width, unsigned int height)
 	//init System
 	GameWindow::instance().init(width, height);
 	GameDevice::instance().init();
-	GameTimer::instance().init();
+	GameTimer::instance().init(GameTimer::METHOD::FixedTimer);
 	GameEffect::instance().init();
 	GameInput::instance().init();
 

@@ -4,6 +4,9 @@
     <Filter Include="INPUT">
       <UniqueIdentifier>{fa76b6c7-d8c7-4f35-a98c-7f55b04b90eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TIMER">
+      <UniqueIdentifier>{88945e73-f775-41d2-92b8-b0b313354c2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -11,7 +14,6 @@
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameDevice.h" />
-    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameSingleton.h" />
     <ClInclude Include="GameEffect.h" />
     <ClInclude Include="GameVertexDef.h" />
@@ -22,6 +24,9 @@
     <ClInclude Include="GameKeyCode.h">
       <Filter>INPUT</Filter>
     </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>TIMER</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -29,12 +34,14 @@
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameDevice.cpp" />
-    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GameEffect.cpp" />
     <ClCompile Include="GameVertexDef.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameInput.cpp">
       <Filter>INPUT</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>TIMER</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

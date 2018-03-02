@@ -2,7 +2,6 @@
 
 
 
-
 void main()
 {
 	unique_ptr< GameApp > game = make_unique<GameApp>();

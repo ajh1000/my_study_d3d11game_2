@@ -5,7 +5,7 @@
 
 GameInput::GameInput()
 	:m_mouseDeltaX(0), m_mouseDeltaY(0), m_wheelValue(0),
-	m_isAnyKeyPressed(false), m_isPaused(false), m_arrSize(255)
+	m_isAnyKeyPressed(false), m_arrSize(255)
 
 {
 	m_arrKeyCodes.clear();
@@ -25,6 +25,7 @@ void GameInput::init()
 	//info link : https://stackoverflow.com/a/20643589
 
 	RAWINPUTDEVICE Rid[2];
+	unsigned char num = 2;
 
 	//KEYBOARD
 	Rid[0].usUsagePage = HID_USAGE_PAGE_GENERIC;
@@ -38,7 +39,7 @@ void GameInput::init()
 	Rid[1].dwFlags = 0;
 	Rid[1].hwndTarget = GameWindow::instance().m_hWnd;
 
-	if (RegisterRawInputDevices(Rid, 2, sizeof(Rid[0])) == FALSE) {
+	if (RegisterRawInputDevices(Rid, num, sizeof(Rid[0])) == FALSE) {
 		throw std::exception("registration failed");
 	}
 

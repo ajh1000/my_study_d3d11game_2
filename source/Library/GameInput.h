@@ -1,10 +1,11 @@
 #pragma once
 #include "GameKeyCode.h"
 
+
 class GameInput : public GameSingleton<GameInput>
 {
 private:
-	//키보드, 마우스 입력 장치의 입력 상태 정보 구조체.
+	//키보드, 마우스 입력 상태 정보 구조체.
 	struct KeyState {
 		KeyState():isPressed(0),isHeld(0),isReleased(0),
 			prevPressed(0), prevReleased(0) {}

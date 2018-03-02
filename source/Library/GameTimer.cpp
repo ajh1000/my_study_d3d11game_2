@@ -30,9 +30,11 @@ GameTimer::GameTimer()
 	m_leftoverSecs(0),
 	m_delta(0),
 	m_elapsedTime(0),
-	m_isLog(0)
+	m_isLog(false),
+	m_method(METHOD::FixedTimer)
 
 {
+	//for init
 	m_last = high_resolution_clock::now();
 
 	m_targetDelta = 1.f / m_targetFPS;
@@ -44,11 +46,43 @@ GameTimer::~GameTimer()
 
 }
 
-void GameTimer::init()
+void GameTimer::init(METHOD method)
 {
+	m_method = method;
+
+	switch (m_method) {
+	case METHOD::FixedTimer:
+		Tick = std::bind(&GameTimer::fixedTick, this, std::placeholders::_1);
+		break;
+
+	case METHOD::VariableTimer:
+		break;
+
+	default:
+		throw std::exception("GameTimer : NO PROPER METHOD ACCEPTED");
+		break;
+	}
 }
 
-void GameTimer::Tick(std::function<void()> Update)
+
+float GameTimer::getTotalElapsedTime()
+{
+	float totalTime = m_elapsedTotalTime;
+	UINT integerPart = static_cast<UINT>(totalTime);
+
+	if (totalTime + 0.1f >= integerPart + 1.f) {
+		totalTime = static_cast<float>(integerPart + 1);
+	}
+	else {
+		totalTime = static_cast<float>(integerPart);
+	}
+
+	m_elapsedTotalTime = totalTime;
+
+	return m_elapsedTotalTime;
+}
+
+void GameTimer::fixedTick(std::function<void()> &update)
 {
 	high_resolution_clock::time_point current = high_resolution_clock::now();
 	duration<float> deltaDuration = duration_cast<duration<float>>(current - m_last);
@@ -58,10 +92,10 @@ void GameTimer::Tick(std::function<void()> Update)
 
 	m_delta = deltaDuration.count();
 
-
+	/*
 	if (m_delta >= m_maxDelta) {
-		m_delta = m_maxDelta;
-	}
+	m_delta = m_maxDelta;
+	}*/
 
 	if (abs(m_delta - m_targetDelta) < m_minDelta) {
 		m_delta = m_targetDelta;
@@ -76,7 +110,7 @@ void GameTimer::Tick(std::function<void()> Update)
 		m_elapsedTotalTime += m_targetDelta;
 		m_leftoverSecs -= m_targetDelta;
 
-		Update();
+		update();
 	}
 
 	if (m_isUpdated == true) {
@@ -98,23 +132,6 @@ void GameTimer::Tick(std::function<void()> Update)
 #endif
 	}
 
-}
 
-float GameTimer::getTotalElapsedTime()
-{
-
-	float totalTime = m_elapsedTotalTime;
-	UINT integerPart = static_cast<UINT>(totalTime);
-
-	if (totalTime + 0.1f >= integerPart + 1.f) {
-		totalTime = static_cast<float>(integerPart + 1);
-	}
-	else {
-		totalTime = static_cast<float>(integerPart);
-	}
-
-	m_elapsedTotalTime = totalTime;
-
-	return m_elapsedTotalTime;
 }
 

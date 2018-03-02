@@ -4,24 +4,28 @@
 class GameTimer  : public GameSingleton<GameTimer>
 {
 public:
+	enum METHOD {
+		FixedTimer=0,
+		VariableTimer
+	};
+public:
 	GameTimer();
 	~GameTimer();
 
+	void init(METHOD type);
 
-	void init();
+	std::function<void(std::function<void()> update)> Tick;
 
-	void Tick(std::function<void()> Update);
-
-	//델타 타임
 	float getDelta() { return m_elapsedTime; }
-
-	// 프로그램 실행 후 흐른 시간.
 	float getTotalElapsedTime();
-
-	//GET FPS
 	int getFPSCounts() { return m_framesPerSecond; }
+	METHOD getTimerMethod() { return m_method; }
 
 	void setTargetFPS(int fps) { m_targetFPS = (float)fps; m_targetDelta = 1.f / fps; }
+
+private:
+	void fixedTick(std::function<void()> &update);
+
 private:
 	std::chrono::high_resolution_clock::time_point m_last;
 	float m_delta = 0;
@@ -39,4 +43,6 @@ private:
 	float m_leftoverSecs = 0;
 
 	bool m_isLog = false;
+
+	METHOD m_method;
 };

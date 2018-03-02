@@ -82,4 +82,7 @@ using namespace DirectX::SimpleMath;
 	#effects11 state Groups
 	https://msdn.microsoft.com/en-us/library/windows/desktop/bb205052(v=vs.85).aspx
 	https://msdn.microsoft.com/en-us/library/windows/desktop/bb205053(v=vs.85).aspx
+
+	#raw function pointer to member function usage 
+	(GameTimer::instance().*(GameTimer::instance().m_tickFunc))([&]() {});
 */
