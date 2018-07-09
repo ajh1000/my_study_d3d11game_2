@@ -30,7 +30,7 @@ GameTimer::GameTimer()
 	m_leftoverSecs(0),
 	m_delta(0),
 	m_elapsedTime(0),
-	m_isLog(false),
+	m_isLog(true),
 	m_method(METHOD::FixedTimer)
 
 {

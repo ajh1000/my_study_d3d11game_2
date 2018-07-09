@@ -42,9 +42,9 @@ void Game::Tick()
 	GameTimer::instance().Tick([&]() {
 		GameInput::instance().update();
 		this->update();
+		this->render();
 	});
 
-	this->render();
 }
 
 void Game::update()
@@ -62,13 +62,10 @@ void Game::render()
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	m_scene->render();
-	GameDevice::instance().m_swapChain->Present(1, 0);
-	/*
-	if (FAILED(GameDevice::instance().m_swapChain->Present(1, 0))) {
-		//temporary exception...
-		//will do some method here later
+
+	if (FAILED(GameDevice::instance().m_swapChain->Present(0, 0))) {
 		throw std::exception("Game::render() failed");
-	}*/
+	}
 }
 
 
@@ -82,7 +79,6 @@ void Game::run(unsigned int width, unsigned int height)
 	GameTimer::instance().init(GameTimer::METHOD::FixedTimer);
 	GameEffect::instance().init();
 	GameInput::instance().init();
-
 
 	
 	//user's init() - virtual func

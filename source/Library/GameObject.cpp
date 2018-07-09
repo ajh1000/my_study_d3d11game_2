@@ -24,7 +24,7 @@ void GameObject::render()
 {
 	Matrix world;
 	static Vector3 pos(0.0,0,0);
-	pos.x += 0.001;
+	pos.x += 0.1*GameTimer::instance().getDelta();
 	world.Translation(pos);
 	Matrix wvp = world*view*proj;
 	wvp.Transpose();
