@@ -16,7 +16,7 @@ public:
 };
 
 
-//VERTICES
+//VERTEX TYPEs
 struct VertexPositionColor {
 	SimpleMath::Vector3 pos;
 	SimpleMath::Vector4 color;

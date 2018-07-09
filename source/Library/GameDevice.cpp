@@ -20,9 +20,9 @@ void GameDevice::init()
 	initD3D();
 
 
-	GameWindow::instance().AddFuncToMsg(WM_SIZE, [&](WPARAM wParam, LPARAM lParam) {
+	//GameWindow::instance().AddFuncToMsg(WM_SIZE, [&](WPARAM wParam, LPARAM lParam) {
 		//this->onResize();
-	});
+	//});
 	
 }
 

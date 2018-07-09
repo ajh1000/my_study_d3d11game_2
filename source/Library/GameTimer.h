@@ -42,7 +42,7 @@ private:
 	float m_secCounter = 0;
 	float m_leftoverSecs = 0;
 
-	bool m_isLog = false;
+	bool m_isLog = true;
 
 	METHOD m_method;
 };

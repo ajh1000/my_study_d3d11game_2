@@ -25,8 +25,7 @@ void GameInput::init()
 	//info link : https://stackoverflow.com/a/20643589
 
 	RAWINPUTDEVICE Rid[2];
-	unsigned char num = 2;
-
+	
 	//KEYBOARD
 	Rid[0].usUsagePage = HID_USAGE_PAGE_GENERIC;
 	Rid[0].usUsage = HID_USAGE_GENERIC_KEYBOARD;
@@ -37,9 +36,9 @@ void GameInput::init()
 	Rid[1].usUsagePage = HID_USAGE_PAGE_GENERIC;
 	Rid[1].usUsage = HID_USAGE_GENERIC_MOUSE;
 	Rid[1].dwFlags = 0;
-	Rid[1].hwndTarget = GameWindow::instance().m_hWnd;
+	Rid[1].hwndTarget =GameWindow::instance().m_hWnd;
 
-	if (RegisterRawInputDevices(Rid, num, sizeof(Rid[0])) == FALSE) {
+	if (RegisterRawInputDevices(Rid, 2, sizeof(Rid[0])) == FALSE) {
 		throw std::exception("registration failed");
 	}
 
@@ -49,11 +48,11 @@ void GameInput::init()
 	});
 
 	GameWindow::instance().AddFuncToMsg(WM_SETFOCUS, [&](WPARAM wParam, LPARAM lParam) {
-		m_arrKeyCodes.assign(m_arrReserve.begin(), m_arrReserve.end());
+		//m_arrKeyCodes.assign(m_arrReserve.begin(), m_arrReserve.end());
 	});
 
 	GameWindow::instance().AddFuncToMsg(WM_KILLFOCUS, [&](WPARAM wParam, LPARAM lParam) {
-		m_arrReserve.assign(m_arrKeyCodes.begin(), m_arrKeyCodes.end());
+		//m_arrReserve.assign(m_arrKeyCodes.begin(), m_arrKeyCodes.end());
 
 		ZeroMemory(m_arrKeyCodes.data(), sizeof(KeyState)*m_arrSize);
 	});
@@ -66,7 +65,7 @@ void GameInput::init()
 
 void GameInput::update()
 {
-	//check pressed&released state. only available at current frame.
+	//check pressed&released state at the begging of the frame. 
 	for (auto &o : m_arrKeyCodes)
 	{
 		if (o.isPressed == true) {

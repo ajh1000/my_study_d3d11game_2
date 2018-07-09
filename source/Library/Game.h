@@ -25,6 +25,8 @@ private:
 private:
 	shared_ptr<GameScene> m_scene;
 	map < string, shared_ptr<GameScene>> m_mapScene;
+
+	bool m_quit = false;
 };
 
 #ifdef _MSC_VER

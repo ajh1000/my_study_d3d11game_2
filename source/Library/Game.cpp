@@ -41,12 +41,10 @@ void Game::Tick()
 	
 	GameTimer::instance().Tick([&]() {
 		GameInput::instance().update();
-
 		this->update();
-
-		this->render();
 	});
 
+	this->render();
 }
 
 void Game::update()
@@ -64,18 +62,19 @@ void Game::render()
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	m_scene->render();
-
-	if (FAILED(GameDevice::instance().m_swapChain->Present(0, 0))) {
-		//temporary exception..
-		//will do some method here
+	GameDevice::instance().m_swapChain->Present(1, 0);
+	/*
+	if (FAILED(GameDevice::instance().m_swapChain->Present(1, 0))) {
+		//temporary exception...
+		//will do some method here later
 		throw std::exception("Game::render() failed");
-	}
+	}*/
 }
 
 
 void Game::run(unsigned int width, unsigned int height)
 {
-	CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	//CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
 	//init System
 	GameWindow::instance().init(width, height);
@@ -92,22 +91,24 @@ void Game::run(unsigned int width, unsigned int height)
 	//LOOP
 	MSG msg = {};
 
-	while (1)
+	while (!m_quit /*=false*/)
 	{
-		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
+		while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-
 			if (msg.message == WM_QUIT)
 			{
+				m_quit = true;
 				break;
 			}
-		}
 
-		Tick();
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		
+		if(!m_quit)
+			Tick();
 
 	}
 
-	CoUninitialize();
+	//CoUninitialize();
 }

@@ -23,6 +23,9 @@ GameObject::~GameObject()
 void GameObject::render()
 {
 	Matrix world;
+	static Vector3 pos(0.0,0,0);
+	pos.x += 0.001;
+	world.Translation(pos);
 	Matrix wvp = world*view*proj;
 	wvp.Transpose();
 
